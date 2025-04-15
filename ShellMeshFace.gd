@@ -13,7 +13,7 @@ func regenerate_mesh(shellWorldData : ShellWorldData):
 	if shellWorldData == null:
 		print("ShellMeshFace: ERROR - shellWorldData is null")
 		return
-	var resolution = int(shellWorldData.globalResolution)
+	var resolution = int(shellWorldData.globalResolution * shellWorldData.radius)
 	var axisA = Vector3(normal.z, normal.x, normal.y)
 	var axisB = normal.cross(axisA)
 	
