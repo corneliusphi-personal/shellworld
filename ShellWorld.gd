@@ -12,6 +12,7 @@ class_name ShellWorld
 						shellWorldData.connect("changed", on_data_changed)
 
 var shell : Shell
+var noiseFilter : NoiseFilter
 
 
 func _ready() -> void:
@@ -22,8 +23,9 @@ func create_shell():
 	if (shell != null):
 		print("ShellWorld: freeing shell")
 		shell.queue_free()
+	noiseFilter = NoiseFilter.new()
 	print("ShellWorld: creating Shell")
-	shell = Shell.new()
+	shell = Shell.new(noiseFilter)
 	add_child(shell)
 	
 

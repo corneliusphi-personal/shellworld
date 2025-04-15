@@ -4,9 +4,11 @@ extends MeshInstance3D
 class_name ShellMeshFace
 
 @export var normal : Vector3
+var noiseFilter : NoiseFilter
 
-func _init(_normal : Vector3) -> void:
+func _init(_normal : Vector3, _noiseFilter : NoiseFilter) -> void:
 	normal = _normal
+	noiseFilter = _noiseFilter
 
 func regenerate_mesh(shellWorldData : ShellWorldData):
 	print("ShellMeshFace: regenerate_mesh")
@@ -43,8 +45,9 @@ func regenerate_mesh(shellWorldData : ShellWorldData):
 			var axisBOffset = (percent.y - 0.5) * 2.0 * axisB
 			var pointOnUnitCube = normal + axisAOffset + axisBOffset
 			var pointOnUnitSphere = pointOnUnitCube.normalized() * shellWorldData.radius
-
-			vertex_array[i] = pointOnUnitSphere
+			var result = noiseFilter.evaluate(pointOnUnitSphere, shellWorldData)
+			var pointWithElevation = result[0]
+			vertex_array[i] = pointWithElevation
 			normal_array[i] = normal
 			uv_array[i] = percent
 						

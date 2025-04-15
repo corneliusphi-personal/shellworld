@@ -12,3 +12,25 @@ class_name ShellWorldData
 		set(value):
 				radius = value
 				emit_changed()
+
+@export var minHeight : float = 1.0:
+	set(value):
+		minHeight = value
+		emit_changed()
+
+@export var amplitude : float = 1.0:
+	set(value):
+		amplitude = value
+		emit_changed()
+
+@export var frequency : float = 1.0:
+	set(value):
+		frequency = value
+		emit_changed()
+
+@export var noiseMap : FastNoiseLite:
+	set(value):
+		noiseMap = value
+		emit_changed()
+		if noiseMap != null && not noiseMap.is_connected("changed", emit_changed):
+			noiseMap.connect("changed", emit_changed)

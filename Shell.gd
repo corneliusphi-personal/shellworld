@@ -10,13 +10,13 @@ var right : ShellMeshFace
 var forward : ShellMeshFace
 var back : ShellMeshFace
 
-func _init() -> void:
-	up = ShellMeshFace.new(Vector3.UP)
-	down = ShellMeshFace.new(Vector3.DOWN)
-	left = ShellMeshFace.new(Vector3.LEFT)
-	right = ShellMeshFace.new(Vector3.RIGHT)
-	forward = ShellMeshFace.new(Vector3.FORWARD)
-	back = ShellMeshFace.new(Vector3.BACK)
+func _init(noiseFilter : NoiseFilter) -> void:
+	up = ShellMeshFace.new(Vector3.UP, noiseFilter)
+	down = ShellMeshFace.new(Vector3.DOWN, noiseFilter)
+	left = ShellMeshFace.new(Vector3.LEFT, noiseFilter)
+	right = ShellMeshFace.new(Vector3.RIGHT, noiseFilter)
+	forward = ShellMeshFace.new(Vector3.FORWARD, noiseFilter)
+	back = ShellMeshFace.new(Vector3.BACK, noiseFilter)
 	add_child(up)
 	add_child(down)
 	add_child(left)
