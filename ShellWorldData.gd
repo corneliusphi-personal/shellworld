@@ -7,3 +7,8 @@ class_name ShellWorldData
 		set(value):
 				globalResolution = value
 				emit_changed()
+
+@export var radius : int = 1:
+		set(value):
+				radius = value
+				emit_changed()

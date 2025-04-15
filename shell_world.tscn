@@ -6,6 +6,7 @@
 [sub_resource type="Resource" id="Resource_cydbd"]
 script = ExtResource("2_gykyr")
 globalResolution = 5
+radius = 4
 metadata/_custom_type_script = "uid://5mnynu7w3tdk"
 
 [node name="ShellWorld" type="Node3D"]

@@ -42,7 +42,7 @@ func regenerate_mesh(shellWorldData : ShellWorldData):
 			var axisAOffset = (percent.x - 0.5) * 2.0 * axisA
 			var axisBOffset = (percent.y - 0.5) * 2.0 * axisB
 			var pointOnUnitCube = normal + axisAOffset + axisBOffset
-			var pointOnUnitSphere = pointOnUnitCube.normalized()
+			var pointOnUnitSphere = pointOnUnitCube.normalized() * shellWorldData.radius
 
 			vertex_array[i] = pointOnUnitSphere
 			normal_array[i] = normal
