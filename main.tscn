@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj8f1x0m5j11d"]
+
+[ext_resource type="PackedScene" uid="uid://c3hwgecf51d21" path="res://shell_world.tscn" id="1_ig7tw"]
+
+[node name="Main" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.984214, 0.0608882, -0.166178, 0, 0.938956, 0.344037, 0.176982, -0.338606, 0.924134, -0.804611, 0.826389, 1.9682)
+
+[node name="ShellWorld" parent="." instance=ExtResource("1_ig7tw")]
