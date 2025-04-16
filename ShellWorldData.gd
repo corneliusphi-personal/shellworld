@@ -18,20 +18,17 @@ class_name ShellWorldData
 		minHeight = value
 		emit_changed()
 
-@export var amplitude : float = 1.0:
-	set(value):
-		amplitude = value
-		emit_changed()
-
-@export var frequency : float = 1.0:
-	set(value):
-		frequency = value
-		emit_changed()
-
 @export var removeZeroTriangles : bool = true:
 	set(value):
 		removeZeroTriangles = value
 		emit_changed()
+
+@export var noiseLayerData : NoiseLayerData:
+	set(value):
+		noiseLayerData = value
+		emit_changed()
+		if noiseLayerData != null && not noiseLayerData.is_connected("changed", emit_changed):
+			noiseLayerData.connect("changed", emit_changed)
 
 @export var noiseMap : FastNoiseLite:
 	set(value):
