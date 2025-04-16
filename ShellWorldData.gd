@@ -28,6 +28,11 @@ class_name ShellWorldData
 		frequency = value
 		emit_changed()
 
+@export var removeZeroTriangles : bool = true:
+	set(value):
+		removeZeroTriangles = value
+		emit_changed()
+
 @export var noiseMap : FastNoiseLite:
 	set(value):
 		noiseMap = value

@@ -21,6 +21,7 @@ func regenerate_mesh(shellWorldData : ShellWorldData):
 	
 	# each vertex on the face
 	var vertex_array := PackedVector3Array()
+	var elevation_array := PackedFloat32Array()
 	# flattened tripples of each triangle on the face
 	var triangles := PackedInt32Array()
 	var normal_array := PackedVector3Array()
@@ -30,6 +31,7 @@ func regenerate_mesh(shellWorldData : ShellWorldData):
 	var num_triangle_indices = (resolution - 1) * (resolution - 1) * 6
 	
 	vertex_array.resize(num_vertices)
+	elevation_array.resize(num_vertices)
 	uv_array.resize(num_vertices)
 	normal_array.resize(num_vertices)
 	triangles.resize(num_triangle_indices)
@@ -47,7 +49,9 @@ func regenerate_mesh(shellWorldData : ShellWorldData):
 			var pointOnUnitSphere = pointOnUnitCube.normalized() * shellWorldData.radius
 			var result = noiseFilter.evaluate(pointOnUnitSphere, shellWorldData)
 			var pointWithElevation = result[0]
+			var elevation = result[1]
 			vertex_array[i] = pointWithElevation
+			elevation_array[i] = elevation
 			normal_array[i] = normal
 			uv_array[i] = percent
 						
@@ -59,14 +63,16 @@ func regenerate_mesh(shellWorldData : ShellWorldData):
 	for y in range(resolution - 1):
 		for x in range(resolution - 1):
 			var base_index = y * resolution + x
-			triangles[tri_index] = base_index
-			triangles[tri_index + 1] = base_index + resolution
-			triangles[tri_index + 2] = base_index + 1
-			tri_index += 3
-			triangles[tri_index] = base_index + 1
-			triangles[tri_index + 1] = base_index + resolution
-			triangles[tri_index + 2] = base_index + resolution + 1
-			tri_index += 3
+			if (elevation_array[base_index] > 0 or elevation_array[base_index + resolution] > 0 or elevation_array[base_index + 1] > 0 or !shellWorldData.removeZeroTriangles):
+				triangles[tri_index] = base_index
+				triangles[tri_index + 1] = base_index + resolution
+				triangles[tri_index + 2] = base_index + 1
+				tri_index += 3
+			if (elevation_array[base_index] > 0 or elevation_array[base_index + resolution] > 0 or elevation_array[base_index + 1] > 0 or !shellWorldData.removeZeroTriangles):
+				triangles[tri_index] = base_index + 1
+				triangles[tri_index + 1] = base_index + resolution
+				triangles[tri_index + 2] = base_index + resolution + 1
+				tri_index += 3
 	print("ShellMeshFace: triindex", tri_index)
 	
 	var arrays := []

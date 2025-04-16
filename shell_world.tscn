@@ -4,15 +4,16 @@
 [ext_resource type="Script" uid="uid://5mnynu7w3tdk" path="res://ShellWorldData.gd" id="2_gykyr"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_gykyr"]
-frequency = 0.0013
+frequency = 0.001
 
 [sub_resource type="Resource" id="Resource_cydbd"]
 script = ExtResource("2_gykyr")
-globalResolution = 3
+globalResolution = 2
 radius = 20
 minHeight = 0.5
 amplitude = 5.0
 frequency = 10.0
+removeZeroTriangles = false
 noiseMap = SubResource("FastNoiseLite_gykyr")
 metadata/_custom_type_script = "uid://5mnynu7w3tdk"
 
