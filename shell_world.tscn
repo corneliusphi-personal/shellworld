@@ -7,7 +7,7 @@
 [sub_resource type="Resource" id="Resource_h88uu"]
 script = ExtResource("2_cydbd")
 enabled = true
-useFirstLayerAsMask = null
+useFirstLayerAsMask = true
 strength = 0.9
 numLayers = 3
 baseRoughness = 5.0
@@ -20,10 +20,10 @@ metadata/_custom_type_script = "uid://c5oq4ud0sachq"
 script = ExtResource("2_cydbd")
 enabled = true
 useFirstLayerAsMask = true
-strength = 60.0
+strength = 50.0
 numLayers = 3
 baseRoughness = 4.0
-roughness = 3.0
+roughness = 1.0
 persistence = 0.5
 minHeight = 0.8
 metadata/_custom_type_script = "uid://c5oq4ud0sachq"
