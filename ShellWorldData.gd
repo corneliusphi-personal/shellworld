@@ -13,22 +13,15 @@ class_name ShellWorldData
 				radius = value
 				emit_changed()
 
-@export var minHeight : float = 1.0:
-	set(value):
-		minHeight = value
-		emit_changed()
-
 @export var removeZeroTriangles : bool = true:
 	set(value):
 		removeZeroTriangles = value
 		emit_changed()
 
-@export var noiseLayerData : NoiseLayerData:
+@export var noiseLayers : Array[NoiseLayerData]:
 	set(value):
-		noiseLayerData = value
+		noiseLayers = value
 		emit_changed()
-		if noiseLayerData != null && not noiseLayerData.is_connected("changed", emit_changed):
-			noiseLayerData.connect("changed", emit_changed)
 
 @export var noiseMap : FastNoiseLite:
 	set(value):

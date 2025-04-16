@@ -8,6 +8,11 @@ class_name NoiseLayerData
 		enabled = value
 		emit_changed()
 
+@export var useFirstLayerAsMask : bool = true:
+	set(value):
+		useFirstLayerAsMask = value
+		emit_changed()
+
 @export var strength : float = 3.0:
 	set(value):
 		strength = value
@@ -23,12 +28,17 @@ class_name NoiseLayerData
 		baseRoughness = value
 		emit_changed()
 
-@export var roughness : float = 2.0:
+@export var roughness : float = 3.0:
 	set(value):
 		roughness = value
 		emit_changed()
 
-@export var persistence : float = 0.5:
+@export var persistence : float = 0.25:
 	set(value):
 		persistence = value
+		emit_changed()
+
+@export var minHeight : float = 0.5:
+	set(value):
+		minHeight = value
 		emit_changed()
