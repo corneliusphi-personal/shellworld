@@ -7,11 +7,11 @@
 [sub_resource type="Resource" id="Resource_h88uu"]
 script = ExtResource("2_cydbd")
 enabled = true
-amplitude = 0.3
-numLayers = 2
-baseRoughness = 10.0
+strength = 1.0
+numLayers = 3
+baseRoughness = 5.0
 roughness = 5.0
-persistence = 0.2
+persistence = 0.5
 metadata/_custom_type_script = "uid://c5oq4ud0sachq"
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_gykyr"]
@@ -20,9 +20,9 @@ frequency = 0.005
 [sub_resource type="Resource" id="Resource_cydbd"]
 script = ExtResource("2_gykyr")
 globalResolution = 2
-radius = 30
-minHeight = 1.5
-removeZeroTriangles = false
+radius = 20
+minHeight = 0.73
+removeZeroTriangles = true
 noiseLayerData = SubResource("Resource_h88uu")
 noiseMap = SubResource("FastNoiseLite_gykyr")
 metadata/_custom_type_script = "uid://5mnynu7w3tdk"

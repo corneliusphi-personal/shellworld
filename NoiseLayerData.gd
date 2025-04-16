@@ -8,9 +8,9 @@ class_name NoiseLayerData
 		enabled = value
 		emit_changed()
 
-@export var amplitude : float = 3.0:
+@export var strength : float = 3.0:
 	set(value):
-		amplitude = value
+		strength = value
 		emit_changed()
 
 @export var numLayers : int = 3:
