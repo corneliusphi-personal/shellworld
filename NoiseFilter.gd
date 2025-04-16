@@ -13,6 +13,8 @@ func _evaluateLayer(
 	shellWorldData: ShellWorldData,
 	noiseLayerData: NoiseLayerData
 ) -> float:
+	if(!noiseLayerData.enabled):
+		return 0
 	var noiseValue: float = 1.0
 	var frequency : float = noiseLayerData.baseRoughness
 	var amplitude: float = noiseLayerData.amplitude
