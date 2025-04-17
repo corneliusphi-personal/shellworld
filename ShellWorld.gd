@@ -26,7 +26,7 @@ func create_shells():
 		if (shell != null):
 			print("ShellWorld: freeing shell")
 			shell.queue_free()
-	noiseFilter = NoiseFilter.new()
+	noiseFilter = SimpleNoiseFilter.new()
 	print("ShellWorld: creating Shell")
 	shellArray.resize(shellWorldData.shellCount)
 	for i in range(shellWorldData.shellCount):
