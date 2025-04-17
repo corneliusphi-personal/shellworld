@@ -3,6 +3,16 @@ extends Resource
 
 class_name NoiseLayerData
 
+enum LayerType {
+	SIMPLE,
+	RIDGED,
+}
+
+@export var type: LayerType = LayerType.SIMPLE:
+	set(value):
+		type = value
+		emit_changed()
+
 @export var enabled : bool = true:
 	set(value):
 		enabled = value

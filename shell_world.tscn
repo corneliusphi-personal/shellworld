@@ -6,6 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_h88uu"]
 script = ExtResource("2_cydbd")
+type = 0
 enabled = true
 useFirstLayerAsMask = true
 strength = 0.9
@@ -18,14 +19,15 @@ metadata/_custom_type_script = "uid://c5oq4ud0sachq"
 
 [sub_resource type="Resource" id="Resource_pywq7"]
 script = ExtResource("2_cydbd")
+type = 0
 enabled = true
 useFirstLayerAsMask = true
-strength = 50.0
+strength = 3.0
 numLayers = 3
 baseRoughness = 4.0
 roughness = 1.0
 persistence = 0.5
-minHeight = 0.8
+minHeight = 0.0
 metadata/_custom_type_script = "uid://c5oq4ud0sachq"
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_gykyr"]
@@ -33,14 +35,15 @@ frequency = 0.005
 
 [sub_resource type="Resource" id="Resource_cydbd"]
 script = ExtResource("2_gykyr")
-globalResolution = 5
+globalResolution = 1
 radius = 20
-shellCount = 2
+shellCount = 1
 removeZeroTriangles = true
 noiseLayers = Array[ExtResource("2_cydbd")]([SubResource("Resource_h88uu"), SubResource("Resource_pywq7")])
 noiseMap = SubResource("FastNoiseLite_gykyr")
 metadata/_custom_type_script = "uid://5mnynu7w3tdk"
 
 [node name="ShellWorld" type="Node3D"]
+transform = Transform3D(0.901667, -0.432432, 0, 0.432432, 0.901667, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_fmpp2")
 shellWorldData = SubResource("Resource_cydbd")
