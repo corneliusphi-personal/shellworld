@@ -13,8 +13,7 @@ func _init(shellWorldData: ShellWorldData) -> void:
 		if layer.type == NoiseLayerData.LayerType.SIMPLE:
 			layers.append(SimpleNoiseFilterLayer.new())
 		if layer.type == NoiseLayerData.LayerType.RIDGED:
-			# TODO: Implement Ridged layer
-			layers.append(NoiseFilterLayer.new())
+			layers.append(RidgedNoiseFilterLayer.new())
 
 func evaluate(point : Vector3, shellWorldData: ShellWorldData) -> Array:
 	if (shellWorldData.noiseLayers == null or shellWorldData.noiseLayers.size() == 0):

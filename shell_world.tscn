@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c3hwgecf51d21"]
+[gd_scene load_steps=9 format=3 uid="uid://c3hwgecf51d21"]
 
 [ext_resource type="Script" uid="uid://d288omvnys74" path="res://ShellWorld.gd" id="1_fmpp2"]
 [ext_resource type="Script" uid="uid://c5oq4ud0sachq" path="res://NoiseLayerData.gd" id="2_cydbd"]
@@ -9,7 +9,7 @@ script = ExtResource("2_cydbd")
 type = 0
 enabled = true
 useFirstLayerAsMask = true
-strength = 0.9
+strength = 1.0
 numLayers = 3
 baseRoughness = 5.0
 roughness = 2.0
@@ -20,26 +20,40 @@ metadata/_custom_type_script = "uid://c5oq4ud0sachq"
 [sub_resource type="Resource" id="Resource_pywq7"]
 script = ExtResource("2_cydbd")
 type = 0
-enabled = true
+enabled = false
 useFirstLayerAsMask = true
-strength = 3.0
+strength = 1.0
 numLayers = 3
-baseRoughness = 4.0
-roughness = 1.0
+baseRoughness = 10.0
+roughness = 4.0
 persistence = 0.5
 minHeight = 0.0
 metadata/_custom_type_script = "uid://c5oq4ud0sachq"
 
+[sub_resource type="Resource" id="Resource_cvjud"]
+script = ExtResource("2_cydbd")
+type = 1
+enabled = true
+useFirstLayerAsMask = true
+strength = 2.0
+numLayers = 1
+baseRoughness = 4.0
+roughness = 3.0
+persistence = 0.25
+minHeight = 0.0
+metadata/_custom_type_script = "uid://c5oq4ud0sachq"
+
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_gykyr"]
-frequency = 0.005
+noise_type = 0
+frequency = 0.0063
 
 [sub_resource type="Resource" id="Resource_cydbd"]
 script = ExtResource("2_gykyr")
-globalResolution = 1
+globalResolution = 6
 radius = 20
 shellCount = 1
 removeZeroTriangles = true
-noiseLayers = Array[ExtResource("2_cydbd")]([SubResource("Resource_h88uu"), SubResource("Resource_pywq7")])
+noiseLayers = Array[ExtResource("2_cydbd")]([SubResource("Resource_h88uu"), SubResource("Resource_pywq7"), SubResource("Resource_cvjud")])
 noiseMap = SubResource("FastNoiseLite_gykyr")
 metadata/_custom_type_script = "uid://5mnynu7w3tdk"
 
