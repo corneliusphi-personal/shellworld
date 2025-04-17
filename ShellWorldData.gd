@@ -3,6 +3,11 @@ extends Resource
 
 class_name ShellWorldData
 
+@export var renderTopOnly : bool = false:
+	set(value):
+		renderTopOnly = value
+		emit_changed()
+
 @export_range(1, 10, 1) var globalResolution : int = 1:
 		set(value):
 			globalResolution = value

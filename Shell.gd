@@ -27,8 +27,9 @@ func _init(noiseFilter : NoiseFilter) -> void:
 func regenerate_mesh(shellWorldData: ShellWorldData, shellNum: int) -> void:
 	print("Shell: regenerate_mesh")
 	up.regenerate_mesh(shellWorldData, shellNum)
-	down.regenerate_mesh(shellWorldData, shellNum)
-	left.regenerate_mesh(shellWorldData, shellNum)
-	right.regenerate_mesh(shellWorldData, shellNum)
-	forward.regenerate_mesh(shellWorldData, shellNum)
-	back.regenerate_mesh(shellWorldData, shellNum)
+	if (!shellWorldData.renderTopOnly):
+		down.regenerate_mesh(shellWorldData, shellNum)
+		left.regenerate_mesh(shellWorldData, shellNum)
+		right.regenerate_mesh(shellWorldData, shellNum)
+		forward.regenerate_mesh(shellWorldData, shellNum)
+		back.regenerate_mesh(shellWorldData, shellNum)
