@@ -27,10 +27,3 @@ class_name ShellWorldData
 	set(value):
 		noiseLayers = value
 		emit_changed()
-
-@export var noiseMap : FastNoiseLite:
-	set(value):
-		noiseMap = value
-		emit_changed()
-		if noiseMap != null && not noiseMap.is_connected("changed", emit_changed):
-			noiseMap.connect("changed", emit_changed)

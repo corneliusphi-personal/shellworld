@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://c3hwgecf51d21"]
+[gd_scene load_steps=11 format=3 uid="uid://c3hwgecf51d21"]
 
 [ext_resource type="Script" uid="uid://d288omvnys74" path="res://ShellWorld.gd" id="1_fmpp2"]
 [ext_resource type="Script" uid="uid://c5oq4ud0sachq" path="res://NoiseLayerData.gd" id="2_cydbd"]
 [ext_resource type="Script" uid="uid://5mnynu7w3tdk" path="res://ShellWorldData.gd" id="2_gykyr"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_cydbd"]
 
 [sub_resource type="Resource" id="Resource_h88uu"]
 script = ExtResource("2_cydbd")
@@ -10,12 +12,15 @@ type = 0
 enabled = true
 useFirstLayerAsMask = true
 strength = 1.0
-numLayers = 3
+numLayers = 2
 baseRoughness = 5.0
 roughness = 2.0
 persistence = 0.5
-minHeight = 0.72
+minHeight = 0.7
+noiseMap = SubResource("FastNoiseLite_cydbd")
 metadata/_custom_type_script = "uid://c5oq4ud0sachq"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_h88uu"]
 
 [sub_resource type="Resource" id="Resource_pywq7"]
 script = ExtResource("2_cydbd")
@@ -28,24 +33,25 @@ baseRoughness = 10.0
 roughness = 4.0
 persistence = 0.5
 minHeight = 0.0
+noiseMap = SubResource("FastNoiseLite_h88uu")
 metadata/_custom_type_script = "uid://c5oq4ud0sachq"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pywq7"]
+noise_type = 5
 
 [sub_resource type="Resource" id="Resource_cvjud"]
 script = ExtResource("2_cydbd")
 type = 1
 enabled = true
 useFirstLayerAsMask = true
-strength = 2.0
-numLayers = 1
-baseRoughness = 4.0
+strength = 1.0
+numLayers = 3
+baseRoughness = 10.0
 roughness = 3.0
 persistence = 0.25
 minHeight = 0.0
+noiseMap = SubResource("FastNoiseLite_pywq7")
 metadata/_custom_type_script = "uid://c5oq4ud0sachq"
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_gykyr"]
-noise_type = 0
-frequency = 0.0063
 
 [sub_resource type="Resource" id="Resource_cydbd"]
 script = ExtResource("2_gykyr")
@@ -54,7 +60,6 @@ radius = 20
 shellCount = 1
 removeZeroTriangles = true
 noiseLayers = Array[ExtResource("2_cydbd")]([SubResource("Resource_h88uu"), SubResource("Resource_pywq7"), SubResource("Resource_cvjud")])
-noiseMap = SubResource("FastNoiseLite_gykyr")
 metadata/_custom_type_script = "uid://5mnynu7w3tdk"
 
 [node name="ShellWorld" type="Node3D"]

@@ -16,9 +16,9 @@ func evaluateLayer(
 	for i in range(noiseLayerData.numLayers):
 		maxAmplitude += amplitude
 		# Between 0 and 1
-		var rawNoise = 1 - abs(shellWorldData.noiseMap.get_noise_3dv(point * frequency))
+		var rawNoise = 1 - abs(noiseLayerData.noiseMap.get_noise_3dv(point * frequency))
 		# Between 0 and Amplitude
-		var value = rawNoise * rawNoise * rawNoise
+		var value = rawNoise * rawNoise * rawNoise * rawNoise * rawNoise * rawNoise
 		value = value * weight
 		weight = value
 		var valueWithAmplitude = value * amplitude
