@@ -8,7 +8,7 @@ func evaluateLayer(
 	shellWorldData: ShellWorldData,
 	noiseLayerData: NoiseLayerData
 ) -> float:
-	var noiseValue: float = 1.0
+	var noiseValue: float = 0.0
 	var frequency : float = noiseLayerData.baseRoughness
 	var amplitude: float = 1.0
 	var maxAmplitude: float = 1.0
