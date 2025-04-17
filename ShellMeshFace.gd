@@ -10,12 +10,13 @@ func _init(_normal : Vector3, _noiseFilter : NoiseFilter) -> void:
 	normal = _normal
 	noiseFilter = _noiseFilter
 
-func regenerate_mesh(shellWorldData : ShellWorldData):
+func regenerate_mesh(shellWorldData : ShellWorldData, shellNum : int):
 	print("ShellMeshFace: regenerate_mesh")
 	if shellWorldData == null:
 		print("ShellMeshFace: ERROR - shellWorldData is null")
 		return
-	var resolution = int(shellWorldData.globalResolution * shellWorldData.radius)
+	var radius = shellWorldData.radius * shellNum
+	var resolution = int(shellWorldData.globalResolution * radius)
 	var axisA = Vector3(normal.z, normal.x, normal.y)
 	var axisB = normal.cross(axisA)
 	
@@ -46,7 +47,7 @@ func regenerate_mesh(shellWorldData : ShellWorldData):
 			var axisAOffset = (percent.x - 0.5) * 2.0 * axisA
 			var axisBOffset = (percent.y - 0.5) * 2.0 * axisB
 			var pointOnUnitCube = normal + axisAOffset + axisBOffset
-			var pointOnUnitSphere = pointOnUnitCube.normalized() * shellWorldData.radius
+			var pointOnUnitSphere = pointOnUnitCube.normalized() * radius
 			var result = noiseFilter.evaluate(pointOnUnitSphere, shellWorldData)
 			var pointWithElevation = result[0]
 			var elevation = result[1]

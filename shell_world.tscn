@@ -35,6 +35,7 @@ frequency = 0.005
 script = ExtResource("2_gykyr")
 globalResolution = 5
 radius = 20
+shellCount = 2
 removeZeroTriangles = true
 noiseLayers = Array[ExtResource("2_cydbd")]([SubResource("Resource_h88uu"), SubResource("Resource_pywq7")])
 noiseMap = SubResource("FastNoiseLite_gykyr")

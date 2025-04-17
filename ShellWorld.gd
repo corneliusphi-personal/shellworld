@@ -11,7 +11,7 @@ class_name ShellWorld
 						print("ShellWorld: Connecting to shellWorldData changed signal")
 						shellWorldData.connect("changed", on_data_changed)
 
-var shell : Shell
+var shellArray : Array[Shell] = []
 var noiseFilter : NoiseFilter
 
 
@@ -19,24 +19,28 @@ func _ready() -> void:
 	print("ShellWorld: _ready called")
 	on_data_changed()
 
-func create_shell():
-	if (shell != null):
-		print("ShellWorld: freeing shell")
-		shell.queue_free()
+func create_shells():
+	if (shellWorldData == null):
+		return
+	for shell in shellArray:
+		if (shell != null):
+			print("ShellWorld: freeing shell")
+			shell.queue_free()
 	noiseFilter = NoiseFilter.new()
 	print("ShellWorld: creating Shell")
-	shell = Shell.new(noiseFilter)
-	add_child(shell)
+	shellArray.resize(shellWorldData.shellCount)
+	for i in range(shellWorldData.shellCount):
+		var shell = Shell.new(noiseFilter)
+		shellArray[i] = shell
+		add_child(shell)
 	
 
 func on_data_changed() -> void:
 	print("ShellWorld: on_data_changed")
-	create_shell()
+	create_shells()
 	if (shellWorldData == null):
 		print("ShellWorld: shellWorldData is null in on_data_changed")
 		return
-	if (shell == null):
-		print("ShellWorld: shell is null on_data_changed")
-		return
-	shell.regenerate_mesh(shellWorldData)
+	for i in range(shellArray.size()):
+		shellArray[i].regenerate_mesh(shellWorldData, i + 1)
 	
