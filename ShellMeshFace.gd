@@ -5,10 +5,12 @@ class_name ShellMeshFace
 
 @export var normal : Vector3
 var noiseFilter : NoiseFilter
+var material: ShaderMaterial
 
-func _init(_normal : Vector3, _noiseFilter : NoiseFilter) -> void:
+func _init(_normal : Vector3, _noiseFilter : NoiseFilter, _material: ShaderMaterial) -> void:
 	normal = _normal
 	noiseFilter = _noiseFilter
+	material = _material
 
 func regenerate_mesh(shellWorldData : ShellWorldData, shellNum : int):
 	print("ShellMeshFace: regenerate_mesh")
@@ -51,13 +53,17 @@ func regenerate_mesh(shellWorldData : ShellWorldData, shellNum : int):
 			var result = noiseFilter.evaluate(pointOnUnitSphere, shellWorldData)
 			var pointWithElevation = result[0]
 			var elevation = result[1]
+			var length = pointWithElevation.length()
+			if length > shellWorldData.maxHeight:
+				shellWorldData.maxHeight = length
+			if length < shellWorldData.minHeight:
+				shellWorldData.minHeight = length
 			vertex_array[i] = pointWithElevation
 			elevation_array[i] = elevation
 			normal_array[i] = normal
 			uv_array[i] = percent
 						
 			i += 1
-	print("ShellMeshFace: vertex count", i)
 	
 	var tri_index : int = 0
 	# generate triangles
@@ -74,14 +80,20 @@ func regenerate_mesh(shellWorldData : ShellWorldData, shellNum : int):
 				triangles[tri_index + 1] = base_index + resolution
 				triangles[tri_index + 2] = base_index + resolution + 1
 				tri_index += 3
-	print("ShellMeshFace: triindex", tri_index)
-	
+
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = vertex_array
 	arrays[Mesh.ARRAY_TEX_UV] = uv_array
 	arrays[Mesh.ARRAY_NORMAL] = normal_array
 	arrays[Mesh.ARRAY_INDEX] = triangles
+	#call_deferred("_update_mesh", arrays, shellWorldData)
+	
+	#func _update_mesh(arrays: Array, shellWorldData: ShellWOrldData):
 	var _mesh := ArrayMesh.new()
 	_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	_mesh.surface_set_material(0, material)
 	self.mesh = _mesh
+	self.material.set_shader_parameter("min_height", shellWorldData.minHeight)
+	self.material.set_shader_parameter("max_height", shellWorldData.maxHeight)
+	self.material.set_shader_parameter("height_color", shellWorldData.heightColor)
