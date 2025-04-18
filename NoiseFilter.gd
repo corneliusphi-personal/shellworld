@@ -32,6 +32,8 @@ func evaluate(point : Vector3, shellWorldData: ShellWorldData, shellData: ShellD
 			if (noiseLayerData.useFirstLayerAsMask):
 				layerMask = mask
 			elevation += layerElevation * layerMask
-	var pointWithElevation = point * (1 + elevation)
-	var pointBelowElevation = point * (1 - elevation)
+	elevation = elevation * 20
+	var normalizedPoint = point.normalized()
+	var pointWithElevation = point + elevation * normalizedPoint
+	var pointBelowElevation = point - elevation * normalizedPoint
 	return [pointWithElevation, pointBelowElevation, elevation]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c3hwgecf51d21"]
+[gd_scene load_steps=26 format=3 uid="uid://c3hwgecf51d21"]
 
 [ext_resource type="Script" uid="uid://d288omvnys74" path="res://ShellWorld.gd" id="1_fmpp2"]
 [ext_resource type="Script" uid="uid://c5oq4ud0sachq" path="res://NoiseLayerData.gd" id="2_cydbd"]
@@ -74,15 +74,39 @@ fractal_octaves = 1
 script = ExtResource("4_h88uu")
 noiseMaps = Array[FastNoiseLite]([SubResource("FastNoiseLite_cvjud"), SubResource("FastNoiseLite_hb2pn"), SubResource("FastNoiseLite_7yfqc")])
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mxpq0"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3y2r7"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7xuin"]
+noise_type = 3
+fractal_octaves = 1
+
+[sub_resource type="Resource" id="Resource_rukmi"]
+script = ExtResource("4_h88uu")
+noiseMaps = Array[FastNoiseLite]([SubResource("FastNoiseLite_mxpq0"), SubResource("FastNoiseLite_3y2r7"), SubResource("FastNoiseLite_7xuin")])
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_k3n7d"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_t3sc8"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_usmoy"]
+noise_type = 3
+fractal_octaves = 1
+
+[sub_resource type="Resource" id="Resource_c8nbw"]
+script = ExtResource("4_h88uu")
+noiseMaps = Array[FastNoiseLite]([SubResource("FastNoiseLite_k3n7d"), SubResource("FastNoiseLite_t3sc8"), SubResource("FastNoiseLite_usmoy")])
+
 [sub_resource type="Resource" id="Resource_cydbd"]
 script = ExtResource("2_gykyr")
 renderTopOnly = false
 globalResolution = 5
 radius = 20
-shellCount = 2
+shellCount = 1
 removeZeroTriangles = true
 noiseLayers = Array[ExtResource("2_cydbd")]([SubResource("Resource_h88uu"), SubResource("Resource_pywq7"), SubResource("Resource_cvjud")])
-shellData = Array[ExtResource("4_h88uu")]([SubResource("Resource_mxpq0")])
+shellData = Array[ExtResource("4_h88uu")]([SubResource("Resource_mxpq0"), SubResource("Resource_rukmi"), SubResource("Resource_c8nbw")])
 heightColor = SubResource("GradientTexture1D_pywq7")
 metadata/_custom_type_script = "uid://5mnynu7w3tdk"
 
