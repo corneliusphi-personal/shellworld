@@ -1,12 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://c3hwgecf51d21"]
+[gd_scene load_steps=18 format=3 uid="uid://c3hwgecf51d21"]
 
 [ext_resource type="Script" uid="uid://d288omvnys74" path="res://ShellWorld.gd" id="1_fmpp2"]
 [ext_resource type="Script" uid="uid://c5oq4ud0sachq" path="res://NoiseLayerData.gd" id="2_cydbd"]
 [ext_resource type="Script" uid="uid://5mnynu7w3tdk" path="res://ShellWorldData.gd" id="2_gykyr"]
+[ext_resource type="Script" uid="uid://bormt8jrii4n1" path="res://ShellData.gd" id="4_h88uu"]
 
 [sub_resource type="Gradient" id="Gradient_h88uu"]
-offsets = PackedFloat32Array(0, 0.0616438, 0.339041, 0.599315, 0.767123, 0.979452, 1)
-colors = PackedColorArray(0, 0, 0.976471, 1, 0.808091, 0.704094, 0.289477, 1, 0.198245, 0.389181, 0.15736, 1, 0.213261, 0.549089, 0.211209, 1, 0.905456, 0.485082, 0.102139, 1, 0.83516, 0.817691, 0.814836, 1, 1, 1, 1, 1)
+offsets = PackedFloat32Array(0, 0.458904, 0.469178, 0.506849, 0.513699, 0.544521, 0.664384, 0.756849, 0.835616, 0.928082)
+colors = PackedColorArray(0.713607, 0.500098, 0, 1, 0.808091, 0.704094, 0.289477, 1, 0.2, 0.388235, 0.960784, 1, 0.0548577, 0.0360861, 0.879657, 1, 0.808091, 0.704094, 0.289477, 1, 0, 0.243137, 0.0156863, 1, 0.211765, 0.913725, 0.0588235, 1, 0.905456, 0.485082, 0.102139, 1, 0.83516, 0.817691, 0.814836, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_pywq7"]
 gradient = SubResource("Gradient_h88uu")
@@ -61,18 +62,30 @@ minHeight = 0.6
 noiseMap = SubResource("FastNoiseLite_pywq7")
 metadata/_custom_type_script = "uid://c5oq4ud0sachq"
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_cvjud"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hb2pn"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7yfqc"]
+noise_type = 3
+fractal_octaves = 1
+
+[sub_resource type="Resource" id="Resource_mxpq0"]
+script = ExtResource("4_h88uu")
+noiseMaps = Array[FastNoiseLite]([SubResource("FastNoiseLite_cvjud"), SubResource("FastNoiseLite_hb2pn"), SubResource("FastNoiseLite_7yfqc")])
+
 [sub_resource type="Resource" id="Resource_cydbd"]
 script = ExtResource("2_gykyr")
 renderTopOnly = false
-globalResolution = 1
+globalResolution = 5
 radius = 20
-shellCount = 1
+shellCount = 2
 removeZeroTriangles = true
 noiseLayers = Array[ExtResource("2_cydbd")]([SubResource("Resource_h88uu"), SubResource("Resource_pywq7"), SubResource("Resource_cvjud")])
+shellData = Array[ExtResource("4_h88uu")]([SubResource("Resource_mxpq0")])
 heightColor = SubResource("GradientTexture1D_pywq7")
 metadata/_custom_type_script = "uid://5mnynu7w3tdk"
 
 [node name="ShellWorld" type="Node3D"]
-transform = Transform3D(0.901667, -0.432432, 0, 0.432432, 0.901667, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_fmpp2")
 shellWorldData = SubResource("Resource_cydbd")

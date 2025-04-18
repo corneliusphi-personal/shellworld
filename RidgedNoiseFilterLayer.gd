@@ -6,7 +6,9 @@ class_name RidgedNoiseFilterLayer
 func evaluateLayer(
 	point : Vector3,
 	shellWorldData: ShellWorldData,
-	noiseLayerData: NoiseLayerData
+	noiseLayerIndex: int,
+	noiseLayerData: NoiseLayerData,
+	shellData: ShellData
 ) -> float:
 	var noiseValue: float = 0.0
 	var frequency : float = noiseLayerData.baseRoughness
@@ -16,7 +18,7 @@ func evaluateLayer(
 	for i in range(noiseLayerData.numLayers):
 		maxAmplitude += amplitude
 		# Between 0 and 1
-		var rawNoise = 1 - abs(noiseLayerData.noiseMap.get_noise_3dv(point * frequency))
+		var rawNoise = 1 - abs(shellData.noiseMaps[noiseLayerIndex].get_noise_3dv(point * frequency))
 		# Between 0 and Amplitude
 		var value = rawNoise * rawNoise
 		value = value * weight

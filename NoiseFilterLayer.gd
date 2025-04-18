@@ -6,6 +6,8 @@ class_name NoiseFilterLayer
 func evaluateLayer(
 	point : Vector3,
 	shellWorldData: ShellWorldData,
-	noiseLayerData: NoiseLayerData
+	noiseLayerIndex: int,
+	noiseLayerData: NoiseLayerData,
+	shellData: ShellData
 ) -> float:	
 	return 0

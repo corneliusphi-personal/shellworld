@@ -53,7 +53,7 @@ func regenerate_mesh(shellWorldData : ShellWorldData, shellNum : int):
 			var axisBOffset = (percent.y - 0.5) * 2.0 * axisB
 			var pointOnUnitCube = normal + axisAOffset + axisBOffset
 			var pointOnUnitSphere = pointOnUnitCube.normalized() * radius
-			var result = noiseFilter.evaluate(pointOnUnitSphere, shellWorldData)
+			var result = noiseFilter.evaluate(pointOnUnitSphere, shellWorldData, shellData)
 			var pointWithElevation = result[0]
 			var pointBelowElevation = result[1]
 			var elevation = result[2]

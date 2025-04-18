@@ -28,9 +28,14 @@ class_name ShellWorldData
 		removeZeroTriangles = value
 		emit_changed()
 
-@export var noiseLayers : Array[NoiseLayerData]:
+@export var noiseLayers : Array[NoiseLayerData] = []:
 	set(value):
 		noiseLayers = value
+		emit_changed()
+
+@export var shellData : Array[ShellData] = []:
+	set(value):
+		shellData = value
 		emit_changed()
 		
 @export var heightColor : GradientTexture1D:

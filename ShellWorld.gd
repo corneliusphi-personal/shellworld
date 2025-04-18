@@ -25,11 +25,34 @@ func create_shells():
 		if (shell != null):
 			print("ShellWorld: freeing shell")
 			shell.queue_free()
+	if (shellWorldData.shellData.size() < shellWorldData.shellCount):
+		var extraShells =  shellWorldData.shellCount - shellWorldData.shellData.size()
+		print("Need more ShellData: ", extraShells)
+		for i in range(extraShells):
+			print("creating shell")
+			shellWorldData.shellData.append(ShellData.new())
+	for i in range(shellWorldData.shellCount):
+		print("checking ShellData: ", i)
+		if (shellWorldData.shellData[i].noiseMaps.size() < shellWorldData.noiseLayers.size()):
+			var extraNoiseMaps = shellWorldData.noiseLayers.size() - shellWorldData.shellData[i].noiseMaps.size()
+			print("insufficient noiseMaps at: ", i, extraNoiseMaps)
+			for j in range(extraNoiseMaps):
+				print("creating FastNoiseLite")
+				shellWorldData.shellData[i].noiseMaps.append(FastNoiseLite.new())
+		for j in range(shellWorldData.noiseLayers.size()):
+			if shellWorldData.noiseLayers[j].type == NoiseLayerData.LayerType.SIMPLE:
+				print("setting simplex")
+				shellWorldData.shellData[i].noiseMaps[j].noise_type = FastNoiseLite.NoiseType.TYPE_SIMPLEX_SMOOTH
+				shellWorldData.shellData[i].noiseMaps[j].fractal_octaves = 5
+			if shellWorldData.noiseLayers[j].type == NoiseLayerData.LayerType.RIDGED:
+				print("setting perlin")
+				shellWorldData.shellData[i].noiseMaps[j].noise_type = FastNoiseLite.NoiseType.TYPE_PERLIN
+				shellWorldData.shellData[i].noiseMaps[j].fractal_octaves = 1
 	noiseFilter = NoiseFilter.new(shellWorldData)
 	print("ShellWorld: creating Shell")
 	shellArray.resize(shellWorldData.shellCount)
 	for i in range(shellWorldData.shellCount):
-		var shell = Shell.new(noiseFilter)
+		var shell = Shell.new(noiseFilter, shellWorldData.shellData[i])
 		shellArray[i] = shell
 		add_child(shell)
 	

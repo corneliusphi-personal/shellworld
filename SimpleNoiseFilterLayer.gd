@@ -6,7 +6,9 @@ class_name SimpleNoiseFilterLayer
 func evaluateLayer(
 	point : Vector3,
 	shellWorldData: ShellWorldData,
-	noiseLayerData: NoiseLayerData
+	noiseLayerIndex: int,
+	noiseLayerData: NoiseLayerData,
+	shellData: ShellData
 ) -> float:
 	var noiseValue: float = 0.0
 	var frequency : float = noiseLayerData.baseRoughness
@@ -15,7 +17,7 @@ func evaluateLayer(
 	for i in range(noiseLayerData.numLayers):
 		maxAmplitude += amplitude
 		# Between -1 and 1
-		var rawNoise = noiseLayerData.noiseMap.get_noise_3dv(point * frequency)
+		var rawNoise = shellData.noiseMaps[noiseLayerIndex].get_noise_3dv(point * frequency)
 		# Between 0 and 1
 		var value = (rawNoise + 1) * 0.5
 		# Between 0 and Amplitude
