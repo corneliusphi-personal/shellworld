@@ -17,7 +17,7 @@ func _init(shellWorldData: ShellWorldData) -> void:
 
 func evaluate(point : Vector3, shellWorldData: ShellWorldData) -> Array:
 	if (shellWorldData.noiseLayers == null or shellWorldData.noiseLayers.size() == 0):
-		return [point, 0]
+		return [point, point, 0]
 	var elevation = 0
 	var mask = 1
 	var firstLayer =  shellWorldData.noiseLayers[0]
@@ -32,5 +32,6 @@ func evaluate(point : Vector3, shellWorldData: ShellWorldData) -> Array:
 			if (noiseLayerData.useFirstLayerAsMask):
 				layerMask = mask
 			elevation += layerElevation * layerMask
-	var pointWithElevation = point * (elevation + 1)
-	return [pointWithElevation, elevation]
+	var pointWithElevation = point * (1 + elevation)
+	var pointBelowElevation = point * (1 - elevation)
+	return [pointWithElevation, pointBelowElevation, elevation]

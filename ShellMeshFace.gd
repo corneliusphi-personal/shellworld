@@ -32,8 +32,8 @@ func regenerate_mesh(shellWorldData : ShellWorldData, shellNum : int):
 	var normal_array := PackedVector3Array()
 	var uv_array := PackedVector2Array()
 	
-	var num_vertices = resolution * resolution
-	var num_triangle_indices = (resolution - 1) * (resolution - 1) * 6
+	var num_vertices = resolution * resolution * 2
+	var num_triangle_indices = (resolution - 1) * (resolution - 1) * 6 * 2
 	
 	vertex_array.resize(num_vertices)
 	elevation_array.resize(num_vertices)
@@ -42,6 +42,7 @@ func regenerate_mesh(shellWorldData : ShellWorldData, shellNum : int):
 	triangles.resize(num_triangle_indices)
 	
 	var i : int = 0
+	var j : int = resolution * resolution
 	
 	# generate sphere points
 	for y in range(resolution):
@@ -54,18 +55,25 @@ func regenerate_mesh(shellWorldData : ShellWorldData, shellNum : int):
 			var pointOnUnitSphere = pointOnUnitCube.normalized() * radius
 			var result = noiseFilter.evaluate(pointOnUnitSphere, shellWorldData)
 			var pointWithElevation = result[0]
-			var elevation = result[1]
-			var length = pointWithElevation.length()
-			if length > shellData.maxHeight:
-				shellData.maxHeight = length
-			if length < shellData.minHeight:
-				shellData.minHeight = length
+			var pointBelowElevation = result[1]
+			var elevation = result[2]
+			var height = pointWithElevation.length()
+			if height > shellData.maxHeight:
+				shellData.maxHeight = height
+			var depth = pointBelowElevation.length()
+			if depth < shellData.minHeight:
+				shellData.minHeight = depth
 			vertex_array[i] = pointWithElevation
+			vertex_array[j] = pointBelowElevation
 			elevation_array[i] = elevation
+			elevation_array[j] = -elevation
 			normal_array[i] = normal
+			normal_array[j] = -normal
 			uv_array[i] = percent
+			uv_array[j] = percent
 						
 			i += 1
+			j += 1
 	
 	var tri_index : int = 0
 	# generate triangles
@@ -81,6 +89,17 @@ func regenerate_mesh(shellWorldData : ShellWorldData, shellNum : int):
 				triangles[tri_index] = base_index + 1
 				triangles[tri_index + 1] = base_index + resolution
 				triangles[tri_index + 2] = base_index + resolution + 1
+				tri_index += 3
+			var bottom_base_index = y * resolution + x + resolution * resolution
+			if (elevation_array[bottom_base_index] < 0 or elevation_array[bottom_base_index + resolution] < 0 or elevation_array[bottom_base_index + 1] < 0 or !shellWorldData.removeZeroTriangles):
+				triangles[tri_index] = bottom_base_index
+				triangles[tri_index + 1] = bottom_base_index + 1
+				triangles[tri_index + 2] = bottom_base_index + resolution
+				tri_index += 3
+			if (elevation_array[bottom_base_index] < 0 or elevation_array[bottom_base_index + resolution] < 0 or elevation_array[bottom_base_index + 1] < 0 or !shellWorldData.removeZeroTriangles):
+				triangles[tri_index] = bottom_base_index + 1
+				triangles[tri_index + 1] = bottom_base_index + resolution + 1
+				triangles[tri_index + 2] = bottom_base_index + resolution
 				tri_index += 3
 
 	var arrays := []

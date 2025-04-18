@@ -64,9 +64,9 @@ metadata/_custom_type_script = "uid://c5oq4ud0sachq"
 [sub_resource type="Resource" id="Resource_cydbd"]
 script = ExtResource("2_gykyr")
 renderTopOnly = false
-globalResolution = 4
+globalResolution = 1
 radius = 20
-shellCount = 2
+shellCount = 1
 removeZeroTriangles = true
 noiseLayers = Array[ExtResource("2_cydbd")]([SubResource("Resource_h88uu"), SubResource("Resource_pywq7"), SubResource("Resource_cvjud")])
 heightColor = SubResource("GradientTexture1D_pywq7")
