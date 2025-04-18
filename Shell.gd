@@ -10,13 +10,26 @@ var right : ShellMeshFace
 var forward : ShellMeshFace
 var back : ShellMeshFace
 
-func _init(noiseFilter : NoiseFilter, material: ShaderMaterial) -> void:
-	up = ShellMeshFace.new(Vector3.UP, noiseFilter, material)
-	down = ShellMeshFace.new(Vector3.DOWN, noiseFilter, material)
-	left = ShellMeshFace.new(Vector3.LEFT, noiseFilter, material)
-	right = ShellMeshFace.new(Vector3.RIGHT, noiseFilter, material)
-	forward = ShellMeshFace.new(Vector3.FORWARD, noiseFilter, material)
-	back = ShellMeshFace.new(Vector3.BACK, noiseFilter, material)
+var material: ShaderMaterial
+var shellData: ShellData
+
+func _init(noiseFilter : NoiseFilter) -> void:
+	if (material == null):
+		print("Setting Material")
+		material = ShaderMaterial.new()
+	if (material.shader == null):
+		print("Setting Material Shader")
+		var HeightShader := load("res://heightShader.gdshader")
+		print("Shader will be: ", HeightShader)
+		material.shader = HeightShader
+	if (shellData == null):
+		shellData = ShellData.new()
+	up = ShellMeshFace.new(Vector3.UP, noiseFilter, material, shellData)
+	down = ShellMeshFace.new(Vector3.DOWN, noiseFilter, material, shellData)
+	left = ShellMeshFace.new(Vector3.LEFT, noiseFilter, material, shellData)
+	right = ShellMeshFace.new(Vector3.RIGHT, noiseFilter, material, shellData)
+	forward = ShellMeshFace.new(Vector3.FORWARD, noiseFilter, material, shellData)
+	back = ShellMeshFace.new(Vector3.BACK, noiseFilter, material, shellData)
 	add_child(up)
 	add_child(down)
 	add_child(left)
@@ -25,8 +38,8 @@ func _init(noiseFilter : NoiseFilter, material: ShaderMaterial) -> void:
 	add_child(back)
 
 func regenerate_mesh(shellWorldData: ShellWorldData, shellNum: int) -> void:
-	shellWorldData.minHeight = 9999999.0
-	shellWorldData.maxHeight = -99999999.0
+	shellData.minHeight = 9999999.0
+	shellData.maxHeight = -99999999.0
 	print("Shell: regenerate_mesh")
 	up.regenerate_mesh(shellWorldData, shellNum)
 	if (!shellWorldData.renderTopOnly):

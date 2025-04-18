@@ -6,11 +6,13 @@ class_name ShellMeshFace
 @export var normal : Vector3
 var noiseFilter : NoiseFilter
 var material: ShaderMaterial
+var shellData: ShellData
 
-func _init(_normal : Vector3, _noiseFilter : NoiseFilter, _material: ShaderMaterial) -> void:
+func _init(_normal : Vector3, _noiseFilter : NoiseFilter, _material: ShaderMaterial, _shellData: ShellData) -> void:
 	normal = _normal
 	noiseFilter = _noiseFilter
 	material = _material
+	shellData = _shellData
 
 func regenerate_mesh(shellWorldData : ShellWorldData, shellNum : int):
 	print("ShellMeshFace: regenerate_mesh")
@@ -54,10 +56,10 @@ func regenerate_mesh(shellWorldData : ShellWorldData, shellNum : int):
 			var pointWithElevation = result[0]
 			var elevation = result[1]
 			var length = pointWithElevation.length()
-			if length > shellWorldData.maxHeight:
-				shellWorldData.maxHeight = length
-			if length < shellWorldData.minHeight:
-				shellWorldData.minHeight = length
+			if length > shellData.maxHeight:
+				shellData.maxHeight = length
+			if length < shellData.minHeight:
+				shellData.minHeight = length
 			vertex_array[i] = pointWithElevation
 			elevation_array[i] = elevation
 			normal_array[i] = normal
@@ -94,6 +96,6 @@ func regenerate_mesh(shellWorldData : ShellWorldData, shellNum : int):
 	_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	_mesh.surface_set_material(0, material)
 	self.mesh = _mesh
-	self.material.set_shader_parameter("min_height", shellWorldData.minHeight)
-	self.material.set_shader_parameter("max_height", shellWorldData.maxHeight)
+	self.material.set_shader_parameter("min_height", shellData.minHeight)
+	self.material.set_shader_parameter("max_height", shellData.maxHeight)
 	self.material.set_shader_parameter("height_color", shellWorldData.heightColor)

@@ -14,21 +14,11 @@ class_name ShellWorld
 var shellArray : Array[Shell] = []
 var noiseFilter : NoiseFilter
 
-@export var material: ShaderMaterial
-
 func _ready() -> void:
 	print("ShellWorld: _ready called")
 	on_data_changed()
 
 func create_shells():
-	if (material == null):
-		print("Setting Material")
-		material = ShaderMaterial.new()
-	if (material.shader == null):
-		print("Setting Material Shader")
-		var HeightShader := load("res://heightShader.gdshader")
-		print("Shader will be: ", HeightShader)
-		material.shader = HeightShader
 	if (shellWorldData == null):
 		return
 	for shell in shellArray:
@@ -39,7 +29,7 @@ func create_shells():
 	print("ShellWorld: creating Shell")
 	shellArray.resize(shellWorldData.shellCount)
 	for i in range(shellWorldData.shellCount):
-		var shell = Shell.new(noiseFilter, material)
+		var shell = Shell.new(noiseFilter)
 		shellArray[i] = shell
 		add_child(shell)
 	

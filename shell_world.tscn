@@ -1,13 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://c3hwgecf51d21"]
+[gd_scene load_steps=13 format=3 uid="uid://c3hwgecf51d21"]
 
 [ext_resource type="Script" uid="uid://d288omvnys74" path="res://ShellWorld.gd" id="1_fmpp2"]
 [ext_resource type="Script" uid="uid://c5oq4ud0sachq" path="res://NoiseLayerData.gd" id="2_cydbd"]
 [ext_resource type="Script" uid="uid://5mnynu7w3tdk" path="res://ShellWorldData.gd" id="2_gykyr"]
-[ext_resource type="Shader" uid="uid://bqawvq3srf0b8" path="res://heightShader.gdshader" id="4_h88uu"]
 
 [sub_resource type="Gradient" id="Gradient_h88uu"]
-offsets = PackedFloat32Array(0, 0.0616438, 0.431507, 0.599315, 0.979452, 1)
-colors = PackedColorArray(0, 0, 0.976471, 1, 0.650533, 0.421788, 0.239086, 1, 0.198245, 0.389181, 0.15736, 1, 0.640188, 0.402526, 0.198102, 1, 0.83516, 0.817691, 0.814836, 1, 1, 1, 1, 1)
+offsets = PackedFloat32Array(0, 0.0616438, 0.339041, 0.599315, 0.767123, 0.979452, 1)
+colors = PackedColorArray(0, 0, 0.976471, 1, 0.808091, 0.704094, 0.289477, 1, 0.198245, 0.389181, 0.15736, 1, 0.213261, 0.549089, 0.211209, 1, 0.905456, 0.485082, 0.102139, 1, 0.83516, 0.817691, 0.814836, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_pywq7"]
 gradient = SubResource("Gradient_h88uu")
@@ -65,23 +64,15 @@ metadata/_custom_type_script = "uid://c5oq4ud0sachq"
 [sub_resource type="Resource" id="Resource_cydbd"]
 script = ExtResource("2_gykyr")
 renderTopOnly = false
-globalResolution = 2
+globalResolution = 4
 radius = 20
-shellCount = 1
+shellCount = 2
 removeZeroTriangles = true
 noiseLayers = Array[ExtResource("2_cydbd")]([SubResource("Resource_h88uu"), SubResource("Resource_pywq7"), SubResource("Resource_cvjud")])
 heightColor = SubResource("GradientTexture1D_pywq7")
 metadata/_custom_type_script = "uid://5mnynu7w3tdk"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cydbd"]
-render_priority = 0
-shader = ExtResource("4_h88uu")
-shader_parameter/min_height = 20.0
-shader_parameter/max_height = 24.2107
-shader_parameter/height_color = SubResource("GradientTexture1D_pywq7")
-
 [node name="ShellWorld" type="Node3D"]
 transform = Transform3D(0.901667, -0.432432, 0, 0.432432, 0.901667, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_fmpp2")
 shellWorldData = SubResource("Resource_cydbd")
-material = SubResource("ShaderMaterial_cydbd")
