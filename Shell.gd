@@ -14,17 +14,21 @@ var material: ShaderMaterial
 var shellData: ShellData
 
 func _init(noiseFilter : NoiseFilter, _shellData) -> void:
+	print("Shell: Creating this shell")
 	shellData = _shellData
 	shellData.maxHeight = -999999.0
 	shellData.minHeight = 9999999.0
 	if (material == null):
-		print("Setting Material")
+		print("Shell: Setting Material")
 		material = ShaderMaterial.new()
 	if (material.shader == null):
-		print("Setting Material Shader")
+		print("Shell: Setting Material Shader")
 		var HeightShader := load("res://heightShader.gdshader")
-		print("Shader will be: ", HeightShader)
+		print("Shell: Shader will be: ", HeightShader)
 		material.shader = HeightShader
+		print("Shell: Shader set to: ", material.shader)
+		print("Shell: Material is: ", material)
+	print("Shell: Creating shell faces")
 	up = ShellMeshFace.new(Vector3.UP, noiseFilter, material, shellData)
 	down = ShellMeshFace.new(Vector3.DOWN, noiseFilter, material, shellData)
 	left = ShellMeshFace.new(Vector3.LEFT, noiseFilter, material, shellData)

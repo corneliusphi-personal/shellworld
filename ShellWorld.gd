@@ -25,6 +25,29 @@ func create_shells():
 		if (shell != null):
 			print("ShellWorld: freeing shell")
 			shell.queue_free()
+	
+	generate_shell_data()
+	
+	noiseFilter = NoiseFilter.new(shellWorldData)
+	
+	if (shellWorldData.biomeNoise == null):
+		shellWorldData.biomeNoise = FastNoiseLite.new()
+	var biomeTexture = Biome.generateBiomeTexture(shellWorldData)
+	print("Generated biome texture: ", biomeTexture)
+	if biomeTexture != null:
+		print("Generated texture size: ", biomeTexture.get_size())
+		print("Generated texture format: ", biomeTexture.get_format())
+		print("Generated texture data: ", biomeTexture.get_image().get_data().slice(0, 16))
+	
+	print("ShellWorld: creating Shell")
+	shellArray.resize(shellWorldData.shellCount)
+	for i in range(shellWorldData.shellCount):
+		shellWorldData.shellData[i].biomeTexture = biomeTexture
+		var shell = Shell.new(noiseFilter, shellWorldData.shellData[i])
+		shellArray[i] = shell
+		add_child(shell)
+
+func generate_shell_data() -> void:
 	if (shellWorldData.shellData.size() < shellWorldData.shellCount):
 		var extraShells =  shellWorldData.shellCount - shellWorldData.shellData.size()
 		print("Need more ShellData: ", extraShells)
@@ -48,14 +71,6 @@ func create_shells():
 				print("setting perlin")
 				shellWorldData.shellData[i].noiseMaps[j].noise_type = FastNoiseLite.NoiseType.TYPE_PERLIN
 				shellWorldData.shellData[i].noiseMaps[j].fractal_octaves = 1
-	noiseFilter = NoiseFilter.new(shellWorldData)
-	print("ShellWorld: creating Shell")
-	shellArray.resize(shellWorldData.shellCount)
-	for i in range(shellWorldData.shellCount):
-		var shell = Shell.new(noiseFilter, shellWorldData.shellData[i])
-		shellArray[i] = shell
-		add_child(shell)
-	
 
 func on_data_changed() -> void:
 	print("ShellWorld: on_data_changed")

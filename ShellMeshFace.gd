@@ -8,7 +8,12 @@ var noiseFilter : NoiseFilter
 var material: ShaderMaterial
 var shellData: ShellData
 
-func _init(_normal : Vector3, _noiseFilter : NoiseFilter, _material: ShaderMaterial, _shellData: ShellData) -> void:
+func _init(
+	_normal : Vector3,
+	_noiseFilter : NoiseFilter,
+	_material: ShaderMaterial,
+	_shellData: ShellData
+) -> void:
 	normal = _normal
 	noiseFilter = _noiseFilter
 	material = _material
@@ -52,8 +57,9 @@ func regenerate_mesh(shellWorldData : ShellWorldData, shellNum : int):
 			var axisAOffset = (percent.x - 0.5) * 2.0 * axisA
 			var axisBOffset = (percent.y - 0.5) * 2.0 * axisB
 			var pointOnUnitCube = normal + axisAOffset + axisBOffset
-			var pointOnUnitSphere = pointOnUnitCube.normalized() * radius
-			var result = noiseFilter.evaluate(pointOnUnitSphere, shellWorldData, shellData)
+			var pointOnUnitSphere = pointOnUnitCube.normalized()
+			var pointOnSphere = pointOnUnitSphere * radius
+			var result = noiseFilter.evaluate(pointOnSphere, shellWorldData, shellData)
 			var pointWithElevation = result[0]
 			var pointBelowElevation = result[1]
 			var elevation = result[2]
@@ -69,9 +75,11 @@ func regenerate_mesh(shellWorldData : ShellWorldData, shellNum : int):
 			elevation_array[j] = -elevation
 			normal_array[i] = normal
 			normal_array[j] = -normal
-			uv_array[i] = percent
-			uv_array[j] = percent
-						
+			var biomePercent = Biome.biome_percent_from_point(pointOnUnitSphere, shellWorldData)
+			# Debug points at key latitudes
+			uv_array[i] = Vector2(0.0, biomePercent)
+			uv_array[j] = Vector2(0.0, biomePercent)
+			
 			i += 1
 			j += 1
 	
@@ -115,6 +123,15 @@ func regenerate_mesh(shellWorldData : ShellWorldData, shellNum : int):
 	_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	_mesh.surface_set_material(0, material)
 	self.mesh = _mesh
+	print("ShellMeshFace: Material is: ", material)
+	print("ShellMeshFace: Shader is: ", material.shader)
+	print("ShellMeshFace: minHeight: ", shellData.minHeight)
+	print("ShellMeshFace: maxHeight: ", shellData.maxHeight)
 	self.material.set_shader_parameter("min_height", shellData.minHeight)
 	self.material.set_shader_parameter("max_height", shellData.maxHeight)
-	self.material.set_shader_parameter("height_color", shellWorldData.heightColor)
+	print("ShellMeshFace: Setting height_color texture: ", shellData.biomeTexture)
+	if shellData.biomeTexture != null:
+		print("Texture size: ", shellData.biomeTexture.get_size())
+		print("Texture format: ", shellData.biomeTexture.get_format())
+		print("Texture data: ", shellData.biomeTexture.get_image().get_data().slice(0, 16))
+	self.material.set_shader_parameter("height_color", shellData.biomeTexture)
